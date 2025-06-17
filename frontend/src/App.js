@@ -23,7 +23,7 @@ function App() {
       setGameId(data.game_id);
       setGuesses([]);
       setAttemptsLeft(6);
-      setCurrentGuess("");
+      setCurrentGuess(["", "", "", "", ""]);
       setWin(false);
       setError(null);
       setGameOver(false);
