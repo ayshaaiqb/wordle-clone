@@ -34,13 +34,14 @@ function App() {
 
 
   const handleGuess = async (guess) => {
-    if (guess.length !== 5 || guess.includes("")) {
+    const guessString = currentGuess.join("");
+    if (guessString.length !== 5 || guessString.includes("")) {
       setError("Guess must be 5 letters.");
       return;
     }
 
     try {
-      const result = await makeGuess(gameId, guess);
+      const result = await makeGuess(gameId, guessString);
       setGuesses([...guesses, { guess, result: result.result }]);
       setAttemptsLeft(result.attempts_left);
       setWin(result.win);
