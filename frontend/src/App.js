@@ -33,7 +33,7 @@ function App() {
   };
 
 
-  const handleGuess = async (guess) => {
+  const handleGuess = async () => {
     const guessString = currentGuess.join("");
     if (guessString.length !== 5 || guessString.includes("")) {
       setError("Guess must be 5 letters.");
@@ -42,7 +42,7 @@ function App() {
 
     try {
       const result = await makeGuess(gameId, guessString);
-      setGuesses([...guesses, { guess, result: result.result }]);
+      setGuesses([...guesses, { guess: guessString, result: result.result }]);
       setAttemptsLeft(result.attempts_left);
       setWin(result.win);
       setGameOver(result.win || result.attempts_left === 0);
@@ -52,6 +52,7 @@ function App() {
       setError(err.message);
     }
   };
+
 
   return (
     <div className="container">
@@ -103,7 +104,7 @@ function App() {
               autoComplete="off"
             />
           ))}
-          <button onClick={() => handleGuess(currentGuess.join(""))}>Guess</button>
+          <button onClick={handleGuess}>Guess</button>
         </div>
       )}
 
