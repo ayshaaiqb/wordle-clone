@@ -35,6 +35,7 @@ class GuessResponse(BaseModel):
     result: list[str]
     win: bool
     attempts_left: int
+    correct_word: str | None = None
 
 # 🟢 API: Start a new game
 @app.post("/start", response_model=StartResponse)
@@ -89,7 +90,10 @@ def guess_word(req: GuessRequest):
 
     win = all(r == "green" for r in result)
     attempts_left = game["max_attempts"] - len(game["guesses"])
-    return GuessResponse(result=result, win=win, attempts_left=attempts_left)
+    
+    correct_word = game["secret"] if win or attempts_left == 0 else None
+
+    return GuessResponse(result=result, win=win, attempts_left=attempts_left, correct_word=correct_word)
 
 # 🔵 API: Get current game status
 @app.get("/status/{game_id}")

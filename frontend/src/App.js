@@ -10,6 +10,7 @@ function App() {
   const [win, setWin] = useState(false);
   const [error, setError] = useState(null);
   const [gameOver, setGameOver] = useState(false);
+  const [correctWord, setCorrectWord] = useState(null);
 
   useEffect(() => {
     startGame().then((data) => {
@@ -48,6 +49,9 @@ function App() {
       setGameOver(result.win || result.attempts_left === 0);
       setCurrentGuess(["", "", "", "", ""]);
       setError(null);
+      if (result.correct_word) {
+        setCorrectWord(result.correct_word);
+      }
     } catch (err) {
       setError(err.message);
     }
@@ -113,6 +117,7 @@ function App() {
       {gameOver && (
         <div className="result-message">
           <p>{win ? "🎉 You won!" : "❌ Game over!"}</p>
+          {!win && correctWord && <p>The word was: <strong>{correctWord.toUpperCase()}</strong></p>}
           <button onClick={handleTryAgain}>Try Again</button>
         </div>
       )}
