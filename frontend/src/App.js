@@ -35,7 +35,7 @@ function App() {
 
   const handleGuess = async () => {
     const guessString = currentGuess.join("");
-    if (guessString.length !== 5 || guessString.includes("")) {
+    if (guessString.length !== 5 || currentGuess.includes("")) {
       setError("Guess must be 5 letters.");
       return;
     }
