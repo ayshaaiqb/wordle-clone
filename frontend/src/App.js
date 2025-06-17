@@ -79,26 +79,27 @@ function App() {
               value={letter}
               onChange={(e) => {
                 const val = e.target.value.toLowerCase();
-                if (/^[a-z]?$/.test(val)) { // allow only letters or empty
+                if (/^[a-z]?$/.test(val)) {
                   const newGuess = [...currentGuess];
                   newGuess[idx] = val;
                   setCurrentGuess(newGuess);
+                  if (val && idx < 4) {
+                    const nextInput = document.getElementById(`letter-${idx + 1}`);
+                    if (nextInput) nextInput.focus();
+                  }
                 }
               }}
               onKeyDown={(e) => {
-                if (e.key === "Backspace" && !currentGuess[idx] && idx > 0) {
-                  // Move focus back on backspace if box empty
-                  const prevInput = document.getElementById(`letter-${idx - 1}`);
-                  if (prevInput) prevInput.focus();
-                }
-                else if (e.key >= "a" && e.key <= "z" && idx < 4) {
-                  // Move focus forward on letter input
-                  const nextInput = document.getElementById(`letter-${idx + 1}`);
-                  if (nextInput) nextInput.focus();
+                if (e.key === "Backspace") {
+                  if (!currentGuess[idx] && idx > 0) {
+                    const prevInput = document.getElementById(`letter-${idx - 1}`);
+                    if (prevInput) prevInput.focus();
+                  }
                 }
               }}
               id={`letter-${idx}`}
               className="letter-box"
+              autoComplete="off"
             />
           ))}
           <button onClick={() => handleGuess(currentGuess.join(""))}>Guess</button>
