@@ -62,3 +62,27 @@ button {
   font-size: 1.5rem;
   margin-top: 1rem;
 }
+
+.input-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 1rem;
+}
+
+.letter-box {
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1.8rem;
+  text-align: center;
+  text-transform: uppercase;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.letter-box:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px #007bff;
+}

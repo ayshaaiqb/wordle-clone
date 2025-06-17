@@ -3,12 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import random
 import uuid
+import nltk
+nltk.download('words')
+from nltk.corpus import words
 
-# ✅ Use a static list of 5-letter words (you can expand this as needed)
-WORDS = [
-    "apple", "grape", "mango", "peach", "berry", "lemon", "plumb", "charm",
-    "light", "shine", "blaze", "drift", "flame", "sugar", "brave"
-]
+five_letter_words = [word.lower() for word in words.words() if len(word) == 5 and word.isalpha()]
 
 app = FastAPI()
 
@@ -41,7 +40,7 @@ class GuessResponse(BaseModel):
 @app.post("/start", response_model=StartResponse)
 def start_game():
     game_id = str(uuid.uuid4())
-    secret_word = random.choice(WORDS)
+    secret_word = random.choice(five_letter_words)
     games[game_id] = {
         "secret": secret_word,
         "guesses": [],
